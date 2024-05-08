@@ -8,7 +8,7 @@ import com.example.demo.utils.BaseContext;
 import com.example.demo.utils.JwtUtil;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.codec.binary.Base64;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 
 
@@ -49,9 +49,9 @@ public class UserServiceImpl implements UserService {
             return Response.error("用户名或密码为空，无法登录");
         }
 
-        if (Base64.isBase64(userLoginReq.getPassword())) {
-            userLoginReq.setPassword(new String(Base64.decodeBase64(userLoginReq.getPassword())));
-        }
+
+        userLoginReq.setPassword(new String(Base64.decodeBase64(userLoginReq.getPassword())));
+
         UserBean userBean = USER_MAP.get(userLoginReq.getUserName());
         if (userBean == null) {
             log.error("未找到用户信息");

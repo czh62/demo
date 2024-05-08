@@ -42,6 +42,7 @@ public class UserController {
     @RequestMapping(value = "/register")
     @ResponseBody
     public Response<String> register(@RequestBody userRegisterReq userRegisterReq) {
+        System.out.println(userRegisterReq);
         return Response.success("暂未开放注册功能");
     }
 
