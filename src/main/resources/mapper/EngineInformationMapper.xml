@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.EngineInformationMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.demo.domain.engineInformation.EngineInformationBean">
+        <id column="id" property="id"/>
+        <result column="engine_model" property="engineModel"/>
+        <result column="manufacturer" property="manufacturer"/>
+        <result column="displacement" property="displacement"/>
+        <result column="after_treatment" property="afterTreatment"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="yn" property="yn"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.example.demo.domain.engineInformation.EngineInformation">
+        insert into engine_information(
+        <if test="engineModel != null">engine_model,</if>
+        <if test="manufacturer != null">manufacturer,</if>
+        <if test="displacement != null">displacement,</if>
+        <if test="afterTreatment != null">after_treatment,</if>
+        <if test="createUser != null">create_user,</if>
+        <if test="createTime != null">create_time,</if>
+        <if test="updateUser != null">update_user,</if>
+        <if test="updateTime != null">update_time,</if>
+        yn
+        )
+        values(
+        <if test="engineModel != null">#{engineModel},</if>
+        <if test="manufacturer != null">#{manufacturer},</if>
+        <if test="displacement != null">#{displacement},</if>
+        <if test="afterTreatment != null">#{afterTreatment},</if>
+        <if test="createUser != null">#{createUser},</if>
+        <if test="createTime != null">#{createTime},</if>
+        <if test="updateUser != null">#{updateUser},</if>
+        <if test="updateTime != null">#{updateTime},</if>
+        1
+        )
+    </insert>
+
+
+    <select id="getList" resultMap="BaseResultMap">
+        select * from engine_information
+        where yn=1
+        <if test="engineModel!= null and engineModel!= ''">
+            and engine_model like concat('%', #{engineModel}, '%')
+        </if>
+        <if test="manufacturer!= null and manufacturer!= ''">
+            and manufacturer like concat('%', #{manufacturer}, '%')
+        </if>
+        <if test="displacement != null and displacement != ''">
+            and displacement like concat('%', #{displacement}, '%')
+        </if>
+        <if test="afterTreatment != null and afterTreatment != ''">
+            and after_treatment like concat('%', #{afterTreatment}, '%')
+        </if>
+        order by update_time desc
+        limit ${(currentPage - 1) * pageSize}, ${pageSize}
+    </select>
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*) from engine_information
+        where yn=1
+        <if test="engineModel!= null and engineModel!= ''">
+            and engine_model like concat('%', #{engineModel}, '%')
+        </if>
+        <if test="manufacturer!= null and manufacturer!= ''">
+            and manufacturer like concat('%', #{manufacturer}, '%')
+        </if>
+        <if test="displacement != null and displacement != ''">
+            and displacement like concat('%', #{displacement}, '%')
+        </if>
+        <if test="afterTreatment != null and afterTreatment != ''">
+            and after_treatment like concat('%', #{afterTreatment}, '%')
+        </if>
+    </select>
+</mapper>
+
