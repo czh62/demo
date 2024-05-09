@@ -1,9 +1,10 @@
 package com.example.demo.domain.enums;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public interface BaseEnum {
+
+    @JsonValue
     String getName();
 
     String getCode();
